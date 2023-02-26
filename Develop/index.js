@@ -46,23 +46,150 @@ const questions = [
     {
         type: 'input',
         name: 'usage',
-        message: 'Please provide a brief description of your project:',
-        validate: (descInput) => {
-            if (descInput) {
+        message: 'Please provide usage information for your project:',
+        validate: (usageInput) => {
+            if (usageInput) {
                 return true;
             } else {
-                console.log('Please provide a brief description of your project!');
+                console.log('Please provide usage information for your project!');
+                return false;
+            }
+        },
+    },
+    {
+        type: 'list',
+        name: 'license',
+        message: 'Please choose a license for your project:',
+        choices: ['MIT', 'Apache', 'GPL', 'BSD'],
+    },
+    {
+        type: 'input',
+        name: 'contributing',
+        message: 'Please provide contribution guidelines for your project:',
+        validate: (contribInput) => {
+            if (contribInput) {
+                return true;
+            } else {
+                console.log('Please provide contribution guidelines for your project!');
+                return false;
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'Please provide test instructions for your project:',
+        validate: (testInput) => {
+            if (testInput) {
+                return true;
+            } else {
+                console.log('Please provide test instructions for your project!');
+                return false;
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Please enter your Github username:',
+        validate: (githubInput) => {
+            if (githubInput) {
+                return true;
+            } else {
+                console.log('Please enter your Github username!');
+                return false;
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter your email address:',
+        validate: (emailInput) => {
+            if (emailInput) {
+                return true;
+            } else {
+                console.log('Please enter your email address!');
                 return false;
             }
         },
     },
 ];
 
+//Creating a function to generate a README file
+function generateREADME(answers) {
+    return `
+    # ${answers.title}
+  
+    ![License: ${answers.license}](https://img.shields.io/badge/License-${answers.license}-yellow.svg)
+    
+    ## Description
+    
+    ${answers.description}
+    
+    ## Table of Contents
+    
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [License](#license)
+    - [Contributing](#contributing)
+    - [Tests](#tests)
+    - [Questions](#questions)
+    
+    ## Installation
+    
+    To install the necessary dependencies, run the following command:
+    
+    \`\`\`
+    ${answers.installation}
+    \`\`\`
+    
+    ## Usage
+    
+    ${answers.usage}
+    
+    ## License
+    
+    This project is licensed under the ${answers.license} license.
+    
+    ## Contributing
+    
+    ${answers.contributing}
+    
+    ## Tests
+    
+    To run tests, run the following command:
+    
+    \`\`\`
+    ${answers.tests}
+    \`\`\`
+    
+    ## Questions
+    
+    If you have any questions about the repository, open an issue or contact me directly at ${answers.email}. You can find more of my work at [${answers.github}](https://github.com/${answers.github}/).
+    `;
+}
+
+
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    fs.writeFile(filename, data, (err) =>
+    err ? console.error(err): console.log('README file created!')
+    );
+}
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer
+    .createPromptModule(questions)
+    .then((answers) => {
+        const readme = generateREADME(answers);
+        writeToFile('./dist/README.md', readme);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
 
 // Function call to initialize app
 init();
