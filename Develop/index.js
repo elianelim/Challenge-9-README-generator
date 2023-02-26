@@ -6,6 +6,32 @@ const fs = require('fs');
 const questions = [
     {
         type: 'input',
+        name: 'github',
+        message: 'Please enter your Github username:',
+        validate: (githubInput) => {
+            if (githubInput) {
+                return true;
+            } else {
+                console.log('Please enter your Github username!');
+                return false;
+            }
+        },
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter your email address:',
+        validate: (emailInput) => {
+            if (emailInput) {
+                return true;
+            } else {
+                console.log('Please enter your email address!');
+                return false;
+            }
+        },
+    },
+    {
+        type: 'input',
         name: 'title',
         message: 'What is the title of your project?',
         validate: (titleInput) => {
@@ -20,15 +46,21 @@ const questions = [
     {
         type: 'input',
         name: 'description',
-        message: 'Please provide a brief description of your project:',
+        message: 'Please write a brief description of your project:',
         validate: (descInput) => {
             if (descInput) {
                 return true;
             } else {
-                console.log('Please provide a brief description of your project!');
+                console.log('Please write a brief description of your project!');
                 return false;
             }
         },
+    },
+    {
+        type: 'list',
+        name: 'license',
+        message: 'What kind of license should your project have?',
+        choices: ['MIT', 'Apache 2.0', 'GPL 3.0', 'BSD 3', 'None'],
     },
     {
         type: 'input',
@@ -57,59 +89,27 @@ const questions = [
         },
     },
     {
-        type: 'list',
-        name: 'license',
-        message: 'Please choose a license for your project:',
-        choices: ['MIT', 'Apache', 'GPL', 'BSD'],
-    },
-    {
-        type: 'input',
-        name: 'contributing',
-        message: 'Please provide contribution guidelines for your project:',
-        validate: (contribInput) => {
-            if (contribInput) {
-                return true;
-            } else {
-                console.log('Please provide contribution guidelines for your project!');
-                return false;
-            }
-        },
-    },
-    {
         type: 'input',
         name: 'tests',
-        message: 'Please provide test instructions for your project:',
+        message: 'What command should be run to run tests?',
         validate: (testInput) => {
             if (testInput) {
                 return true;
             } else {
-                console.log('Please provide test instructions for your project!');
+                console.log('What command should be run to run tests?');
                 return false;
             }
         },
     },
     {
         type: 'input',
-        name: 'github',
-        message: 'Please enter your Github username:',
-        validate: (githubInput) => {
-            if (githubInput) {
+        name: 'contributing',
+        message: 'What does the user need to know anout contributing to the repo?',
+        validate: (contribInput) => {
+            if (contribInput) {
                 return true;
             } else {
-                console.log('Please enter your Github username!');
-                return false;
-            }
-        },
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'Please enter your email address:',
-        validate: (emailInput) => {
-            if (emailInput) {
-                return true;
-            } else {
-                console.log('Please enter your email address!');
+                console.log('What does the user need to know anout contributing to the repo?');
                 return false;
             }
         },
